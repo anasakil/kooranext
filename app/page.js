@@ -3,7 +3,7 @@ import MatchCard from '../components/MatchCard';
 
 
 const fetchMatches = async () => {
-    const response = await fetch('http://localhost:3000/api/matches', {
+    const response = await fetch('https://kooranext.vercel.app/api/matches', {
         cache: 'no-store',
     });
     if (!response.ok) {
