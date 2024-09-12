@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 const fetchMatch = async (id) => {
-  const response = await fetch(`http://localhost:3000/api/matches/${id}`);
+  const response = await fetch(`https://kooranext.vercel.app/api/matches/${id}`);
   if (!response.ok) {
     throw new Error('Failed to fetch match data');
   }
