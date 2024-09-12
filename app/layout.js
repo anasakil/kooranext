@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from '../components/Navbar';
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6784576418150334"
+            crossorigin="anonymous"
+          ></script>
+          {/* Ajoutez d'autres balises meta si nécessaire */}
+        </Head>
         <Navbar />
         {children}
       </body>
