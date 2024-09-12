@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
           <meta name="author" content="Your Name" />
 
           {/* Google AdSense verification */}
-          <meta name="google-adsense-account" content="ca-pub-6784576418150334" />
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6784576418150334" crossorigin="anonymous"></script>
         </Head>
         <Navbar />
         {children}
