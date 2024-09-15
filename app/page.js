@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import MatchCard from '../components/MatchCard';
 
 const fetchMatches = async () => {
@@ -11,8 +11,7 @@ const fetchMatches = async () => {
     return response.json();
 };
 
-// Dynamically import the AdSense component to ensure it's only loaded client-side
-const AdsComponent = dynamic(() => import('../components/AdsComponent'), { ssr: false });
+// const AdsComponent = dynamic(() => import('../components/AdsComponent'), { ssr: false });
 
 const MatchOverviewPage = async () => {
     let matches = [];
@@ -29,7 +28,6 @@ const MatchOverviewPage = async () => {
             <h1 className="text-3xl font-bold mb-4">Match Overview</h1>
             {error && <p className="text-red-500 mb-4">{error}</p>}
 
-            {/* Google AdSense Ad Unit */}
             <div className="flex justify-center my-4">
                 <AdsComponent />
             </div>
@@ -46,10 +44,9 @@ const MatchOverviewPage = async () => {
                 )}
             </ul>
 
-            {/* Another Ad Placement after match list */}
-            <div className="flex justify-center my-4">
+            {/* <div className="flex justify-center my-4">
                 <AdsComponent />
-            </div>
+            </div> */}
         </div>
     );
 };

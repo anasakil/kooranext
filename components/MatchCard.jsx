@@ -6,7 +6,7 @@ const MatchCard = ({ match }) => {
     const { _id, teamA, teamB, status, matchDate, teamAImg, teamBImg } = match;
 
     return (
-        <Link className=" w-[100%] md:w-[90%] lg:w-[60%] min-h-42" href={`/match/${_id}`}>
+        <Link className=" transform transition duration-300 hover:scale-105 w-[100%] md:w-[90%] lg:w-[60%] min-h-42" href={`/match/${_id}`}>
             <div className="bg-white rounded-lg shadow-md p-4 flex items-center justify-between hover:shadow-lg transition-shadow">
                 <div className="flex items-center space-x-2 w-1/3">
                     
@@ -21,7 +21,7 @@ const MatchCard = ({ match }) => {
                     <span className="font-semibold text-teal-800">{teamA}</span>
                 </div>
                 <div className="flex flex-col items-center w-1/3">
-                    <span className="text-teal-600 font-bold mb-1">{status || 'VS'}</span>
+                    <span className="text-teal-600 font-bold mb-1">{status}</span>
                     <span className="text-sm text-gray-500">{new Date(matchDate).toLocaleDateString()}</span>
                 </div>
                 <div className="flex items-center justify-end space-x-2 w-1/3">

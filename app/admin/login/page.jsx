@@ -1,9 +1,8 @@
-// app/admin/login/page.jsx
 
-"use client"; // Mark this file as a Client Component
+"use client"; 
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Updated import for client-side routing
+import { useRouter } from 'next/navigation'; 
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');

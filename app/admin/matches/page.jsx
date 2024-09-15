@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Popconfirm, message, Modal, Form, Input, DatePicker, Select, Upload } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import 'dayjs/locale/en-gb'; // Import locale if needed
+import Link from 'next/link';
+import 'dayjs/locale/en-gb'; 
 import { UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -48,11 +49,7 @@ const AdminMatchesPage = () => {
         setIsModalVisible(true);
     };
 
-    const handleAdd = () => {
-        form.resetFields();
-        setEditMatch(null);
-        setIsAddModalVisible(true);
-    };
+  
 
     const handleDelete = async (id) => {
         try {
@@ -96,31 +93,7 @@ const AdminMatchesPage = () => {
         }
     };
 
-    const handleAddMatch = async (values) => {
-        try {
-            const response = await fetch('/api/matches', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: JSON.stringify({
-                    ...values,
-                    matchDate: values.matchDate ? values.matchDate.toISOString() : null,
-                }),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to add match');
-            }
-            const newMatch = await response.json();
-            setMatches([...matches, newMatch]);
-            message.success('Match added successfully');
-            setIsAddModalVisible(false);
-        } catch (error) {
-            console.error('Error adding match:', error);
-            message.error('Failed to add match');
-        }
-    };
+    
 
     const columns = [
         {
@@ -180,29 +153,30 @@ const AdminMatchesPage = () => {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <div style={{ width: '80%', maxWidth: '1200px' }}>
                 <h1>Admin Matches Page</h1>
+                <Link href="/admin/matches/add">
                 <Button
                     type="primary"
                     icon={<PlusOutlined />}
                     style={{ marginBottom: 16 }}
-                    onClick={handleAdd}
+
                 >
                     Add Match
                 </Button>
+                </Link>
                 <Table dataSource={matches} columns={columns} rowKey="_id" />
 
                 <Modal
-                    title={editMatch ? "Edit Match" : "Add Match"}
-                    visible={isModalVisible || isAddModalVisible}
+                    title={"Edit Match"}
+                    visible={isModalVisible}
                     onCancel={() => {
                         setIsModalVisible(false);
-                        setIsAddModalVisible(false);
                     }}
                     footer={null}
                 >
                     <Form
                         form={form}
                         layout="vertical"
-                        onFinish={editMatch ? handleUpdate : handleAddMatch}
+                        onFinish={ handleUpdate}
                         initialValues={{
                             status: editMatch?.status,
                             matchDate: editMatch?.matchDate ? dayjs(editMatch.matchDate) : null,
@@ -240,7 +214,7 @@ const AdminMatchesPage = () => {
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
-                                {editMatch ? "Update" : "Add"}
+                                {"Update"}
                             </Button>
                         </Form.Item>
                     </Form>

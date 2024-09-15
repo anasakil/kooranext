@@ -27,12 +27,12 @@ export default function Navbar() {
 
           <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
-              <Link href="/login" className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow">
+              <Link href="/admin/login" className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow">
                 Login
               </Link>
 
               <div className="hidden sm:flex">
-                <Link href="/register" className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600">
+                <Link href="/admin/register" className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600">
                   Register
                 </Link>
               </div>

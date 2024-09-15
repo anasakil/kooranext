@@ -4,7 +4,6 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-// Set up Multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const uploadDir = './public/uploads';
@@ -19,15 +18,13 @@ const storage = multer.diskStorage({
     }
 });
 
-// Initialize multer with the defined storage
 const upload = multer({ storage: storage });
 
-// Middleware to handle the image upload
 const uploadMiddleware = upload.fields([{ name: 'teamAImg' }, { name: 'teamBImg' }]);
 
 export const config = {
     api: {
-        bodyParser: false // Disable Next.js bodyParser to use multer
+        bodyParser: false 
     }
 };
 
@@ -46,6 +43,8 @@ export default async function handler(req, res) {
         uploadMiddleware(req, res, async function (err) {
             if (err) {
                 return res.status(400).json({ message: 'Error uploading images' });
+                console.log(req.files);
+
             }
             try {
                 // Create new match with image paths
@@ -69,6 +68,7 @@ export default async function handler(req, res) {
             }
         });
     } else {
-        res.status(405).end(); // Method Not Allowed
+        console.error('Error creating match:', error); 
+        res.status(405).end(); 
     }
 }
