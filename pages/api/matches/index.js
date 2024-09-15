@@ -4,6 +4,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
+// Configure Multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const uploadDir = './public/uploads';
@@ -18,10 +19,16 @@ const storage = multer.diskStorage({
     }
 });
 
+// Multer upload configuration
 const upload = multer({ storage: storage });
 
-const uploadMiddleware = upload.fields([{ name: 'teamAImg' }, { name: 'teamBImg' }]);
+// Middleware to handle file uploads
+const uploadMiddleware = upload.fields([
+    { name: 'teamAImg' }, 
+    { name: 'teamBImg' }
+]);
 
+// Disable Next.js bodyParser to use multer
 export const config = {
     api: {
         bodyParser: false 
@@ -34,22 +41,25 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
             const matches = await Match.find({});
-            res.status(200).json(matches);
+            return res.status(200).json(matches);
         } catch (error) {
-            res.status(500).json({ message: 'Error fetching matches' });
+            return res.status(500).json({ message: 'Error fetching matches' });
         }
     } else if (req.method === 'POST') {
         // Handle image upload using multer
         uploadMiddleware(req, res, async function (err) {
             if (err) {
                 return res.status(400).json({ message: 'Error uploading images' });
-                console.log(req.files);
-
             }
+
             try {
-                // Create new match with image paths
+                // Extract data from the request
                 const { teamA, teamB, status, videoUrl, matchDate, tournament } = req.body;
-                
+
+                // Log the files for debugging
+                console.log('Uploaded files:', req.files);
+
+                // Create a new match document with image paths
                 const match = new Match({
                     teamA,
                     teamB,
@@ -57,18 +67,19 @@ export default async function handler(req, res) {
                     videoUrl,
                     matchDate,
                     tournament,
-                    teamAImg: req.files.teamAImg ? `/uploads/${req.files.teamAImg[0].filename}` : null,
-                    teamBImg: req.files.teamBImg ? `/uploads/${req.files.teamBImg[0].filename}` : null
+                    teamAImg: req.files?.teamAImg ? `/uploads/${req.files.teamAImg[0].filename}` : null,
+                    teamBImg: req.files?.teamBImg ? `/uploads/${req.files.teamBImg[0].filename}` : null
                 });
 
+                // Save the match to the database
                 await match.save();
-                res.status(201).json(match);
+                return res.status(201).json(match);
             } catch (error) {
-                res.status(400).json({ message: 'Error creating match' });
+                console.error('Error creating match:', error);
+                return res.status(400).json({ message: 'Error creating match' });
             }
         });
     } else {
-        console.error('Error creating match:', error); 
-        res.status(405).end(); 
+        return res.status(405).json({ message: 'Method not allowed' });
     }
 }
