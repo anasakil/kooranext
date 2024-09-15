@@ -1,4 +1,4 @@
-// import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic';
 import MatchCard from '../components/MatchCard';
 
 const fetchMatches = async () => {
@@ -11,7 +11,7 @@ const fetchMatches = async () => {
     return response.json();
 };
 
-// const AdsComponent = dynamic(() => import('../components/AdsComponent'), { ssr: false });
+const AdsComponent = dynamic(() => import('../components/AdsComponent'), { ssr: false });
 
 const MatchOverviewPage = async () => {
     let matches = [];
@@ -44,9 +44,9 @@ const MatchOverviewPage = async () => {
                 )}
             </ul>
 
-            {/* <div className="flex justify-center my-4">
+            <div className="flex justify-center my-4">
                 <AdsComponent />
-            </div> */}
+            </div>
         </div>
     );
 };
